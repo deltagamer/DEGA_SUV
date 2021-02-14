@@ -1,4 +1,4 @@
-@DEGA_SUV
+DEGA: ArmA 2 PMC SUV Modification
 ==============
 
 ![SUV Front View](https://raw.githubusercontent.com/deltagamer/DEGA_SUV/main/Release_Notes/20210214143044_1.jpg)
