@@ -1,7 +1,7 @@
 @DEGA_SUV
 ==============
 
-![Wildcat Front View](https://raw.githubusercontent.com/deltagamer/DEGA_Wildcats/master/Release_Notes/Thread_Images/2015-09-11_00001.jpg)
+![SUV Front View](https://raw.githubusercontent.com/deltagamer/DEGA_Wildcats/master/Release_Notes/Thread_Images/2015-09-11_00001.jpg)
 
 Features
 =========
@@ -16,6 +16,7 @@ Whats Planned
 
 * Skins
 * Working Side Doors
+* More vehicle kits like marked police versions
 
 
 Credits
