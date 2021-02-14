@@ -5,17 +5,19 @@ DEGA: ArmA 2 PMC SUV Modification
 
 Features
 =========
-* Ability to open and close Rear and Turret doors
+* Ability to open and close rear and turret doors
 * Passenger FFV
-* Bulletproof Glass
-* Illuminating Dash
+* Bulletproof glass
+* Illuminating dash
 * No scripts for turret
+* Police siren and lights
+* Unmarked versions for ViP escort
 
 Whats Planned
 =========
 
 * Skins
-* Working Side Doors
+* Working side doors
 * More vehicle kits like marked police versions
 
 License
