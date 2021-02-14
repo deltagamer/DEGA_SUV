@@ -18,6 +18,11 @@ Whats Planned
 * Working Side Doors
 * More vehicle kits like marked police versions
 
+License
+=============
+
+![License](https://www.bohemia.net/assets/img/licenses/APL-SA.png)
+Released under [APL-SA](https://www.bohemia.net/community/licenses/arma-public-license-share-alike/)
 
 Credits
 =============
