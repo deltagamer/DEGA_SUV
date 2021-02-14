@@ -1,7 +1,7 @@
 @DEGA_SUV
 ==============
 
-![SUV Front View](https://raw.githubusercontent.com/deltagamer/DEGA_Wildcats/master/Release_Notes/Thread_Images/2015-09-11_00001.jpg)
+![SUV Front View](https://raw.githubusercontent.com/deltagamer/DEGA_SUV/main/Release_Notes/20210214143044_1.jpg)
 
 Features
 =========
