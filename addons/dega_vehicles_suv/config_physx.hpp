@@ -5,7 +5,7 @@
 		wheelCircumference = 2.805;
 		antiRollbarForceCoef=3;
 		antiRollbarForceLimit=2;
-		antiRollbarSpeedMin=20;
+		antiRollbarSpeedMin=40;
 		antiRollbarSpeedMax=150;		
 		idleRpm = 1000;
 		redRpm = 6500;

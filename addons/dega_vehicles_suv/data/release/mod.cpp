@@ -1,5 +1,5 @@
 
-name = "DEGA: ArmA 2 PMC SUV Port v1.0";
+name = "DEGA: ArmA 2 PMC SUV Port v1.1";
 description = "DEGA: ArmA 2 PMC SUV Modification";
 picture = "\dega_vehicles_suv\data\release\logo_dega.paa";
 actionName = "";

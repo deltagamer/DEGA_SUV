@@ -10,7 +10,10 @@ class CfgMovesBasic
 		SUV_Cargo_EP1="SUV_Cargo_EP1";
 		SUV_Cargo01_EP1="SUV_Cargo01_EP1";
 		SUV_Cargo02_EP1="SUV_Cargo02_EP1";
-		SUV_Driver_EP1="SUV_Driver_EP1";		
+		SUV_Driver_EP1="SUV_Driver_EP1";
+		SUV_Cargo_Frontleft_Side = "SUV_Cargo_Frontleft_Side";
+		SUV_Cargo_Frontright_Side = "SUV_Cargo_Frontright_Side";
+		SUV_Cargo_Back_Side = "SUV_Cargo_Back_Side";		
 	};
 };
 
@@ -19,6 +22,24 @@ class CfgMovesMaleSdr: CfgMovesBasic
 	class States
 	{
 		class Crew;
+		class SUV_Cargo_Frontleft_Side: Crew
+		{
+			file = "\dega_vehicles_suv\data\Anim\suv_cargo_front_left_side.rtm";
+			interpolateTo[] = {"Unconscious",1};
+			speed = 1e+10;
+		};
+		class SUV_Cargo_Frontright_Side: Crew
+		{
+			file = "\dega_vehicles_suv\data\Anim\suv_cargo_front_right_side.rtm";
+			interpolateTo[] = {"Unconscious",1};
+			speed = 1e+10;
+		};	
+		class SUV_Cargo_Back_Side: Crew
+		{
+			file = "\dega_vehicles_suv\data\Anim\suv_cargo_back_side.rtm";
+			interpolateTo[] = {"Unconscious",1};
+			speed = 1e+10;
+		};		
 		class ArmoredSUV_Gunner_PMC: Crew
 		{
 			file = "\dega_vehicles_suv\data\Anim\SUVmatildaTurnOutPose.rtm";

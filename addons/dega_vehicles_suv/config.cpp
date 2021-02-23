@@ -1,6 +1,6 @@
 #include "\dega_vehicles_suv\BasicDefines.hpp"
 #include "\dega_vehicles_suv\config_crewanimation.hpp"
-
+class Mode_FullAuto;
 class CfgPatches 
 {
 	class DEGA_Vehicles_Suv 
@@ -76,13 +76,13 @@ class CfgVehicles
 		mfMax = 100; 		
 		mFact = 1;           // Metabolism factor - number from interval <0, 1> (0 - metabolism has no influence, 1 - metabolism has full influence (no other temperature source will be considered)).
 		tBody = 200;           // Metabolism temperature of the model (in celsius)
-		displayName = "Armoured Suburban SUV";
+		displayName = "Armoured Suburban";
 		model = "\dega_vehicles_suv\armoredSUV_PMC.p3d";
     	icon = "\dega_vehicles_suv\data\ui\Icon_suv_minigun_PMC.paa";
     	picture = "\dega_vehicles_suv\data\ui\Picture_suv_minigun_PMC_ca.paa";
     	mapSize = 7;    		
 		accuracy = 0.2;
-		armor = 80;
+		armor = 30;
 		damageResistance = 0.00555;	
 		transportMaxWeapons = 5000;
 		transportMaxMagazines = 20000;	
@@ -95,7 +95,7 @@ class CfgVehicles
 		driverAction = "Driver_low01";
 		cargoAction[] = {"SUV_Cargo_EP1", "SUV_Cargo02_EP1", "SUV_Cargo01_EP1"};
 		outsideSoundFilter = 1;
-        hiddenSelections[] = {"Camo1","Camo2"};
+        hiddenSelections[] = {"camo1","camo2"};
 		crew = "I_soldier_F";
 		typicalCargo[] = {Soldier_PMC, Soldier_PMC, Soldier_PMC, Soldier_PMC, Soldier_PMC};		
         #include "\dega_vehicles_suv\config_sound.hpp"
@@ -106,6 +106,11 @@ class CfgVehicles
 			hide[] = {"clan", "zasleh"};
 			verticalOffset = -0.00731516;
 		};	
+		class PlateInfos
+		{
+			name = "spz";
+			color[] = {0, 0, 0, 0.75};
+		};		
 		class AcreIntercoms{};
 		class AcreRacks{};
         class CargoTurret;		
@@ -183,6 +188,70 @@ class CfgVehicles
 				inGunnerMayFire = 0;
 				commanding = -2;
 				gunnerCompartments = "Compartment1";
+			};	
+			class CargoTurret_2: CargoTurret
+			{
+				gunnerAction = "SUV_Cargo_Frontleft_Side";
+				gunnerCompartments = "Compartment2";
+				memoryPointsGetInGunner = "pos external_L";
+				memoryPointsGetInGunnerDir = "pos external_L dir";
+				gunnerName = "Left external (Front)";
+				proxyIndex = 11;
+				maxElev = 65;
+				minElev = -10;
+				maxTurn = 105;
+				minTurn = 50;
+				isPersonTurret = 0;
+				ejectDeadGunner = 1;
+				memoryPointGunnerOptics = "eye";
+				LODTurnedIn = 1;
+				LODTurnedOut = 1;
+				class dynamicViewLimits{};
+				showAsCargo = 1;
+			};
+			class CargoTurret_3: CargoTurret_2
+			{
+				proxyIndex = 7;
+				gunnerName = "Left external (Rear)";
+				gunnerAction = "SUV_Cargo_Back_Side";				
+			};
+			class CargoTurret_4: CargoTurret_2
+			{
+				proxyIndex = 8;
+				gunnerName = "Left external (Middle)";
+				gunnerAction = "SUV_Cargo_Back_Side";				
+			};
+			class CargoTurret_5: CargoTurret
+			{
+				gunnerAction = "SUV_Cargo_Frontright_Side";
+				gunnerCompartments = "Compartment3";
+				memoryPointsGetInGunner = "pos external_R";
+				memoryPointsGetInGunnerDir = "pos external_R dir";
+				gunnerName = "Right external (Front)";
+				proxyIndex = 12;
+				maxElev = 65;
+				minElev = -10;
+				maxTurn = 105;
+				minTurn = 50;
+				isPersonTurret = 0;
+				ejectDeadGunner = 1;
+				memoryPointGunnerOptics = "eye";
+				LODTurnedIn = 1;
+				LODTurnedOut = 1;
+				class dynamicViewLimits{};
+				showAsCargo = 1;
+			};
+			class CargoTurret_6: CargoTurret_5
+			{
+				proxyIndex = 9;
+				gunnerName = "Right external (Rear)";
+				gunnerAction = "SUV_Cargo_Back_Side";				
+			};
+			class CargoTurret_7: CargoTurret_5
+			{
+				proxyIndex = 10;
+				gunnerName = "Right external (Middle)";
+				gunnerAction = "SUV_Cargo_Back_Side";				
 			};			
 		};
 		class AnimationSources : AnimationSources
@@ -196,16 +265,25 @@ class CfgVehicles
 				source="user"; 
 				animPeriod=0; 
 				initPhase=0; 
-				displayName = "Hide Turret"; 
+				displayName = "Hide Turret (Locks Gunner)"; 
 				author = "Deltagamer"; 
-                onPhaseChanged = "if ((_this select 1) == 0) then { (_this select 0) lockTurret [[0],false]; (_this select 0) setObjectTextureGlobal [0, ""\dega_vehicles_suv\data\armoredsuv_bodygun_co.paa""]; (_this select 0) setObjectTextureGlobal [1, ""\dega_vehicles_suv\data\armoredsuv_interiergun_co.paa""]; (_this select 0) setObjectMaterialGlobal [0, ""\dega_vehicles_suv\data\suv_armouredbody.rvmat""]; (_this select 0) setObjectMaterialGlobal [1, ""\dega_vehicles_suv\data\suv_interier.rvmat""]; } else { (_this select 0) lockTurret [[0],true]; (_this select 0) setObjectTextureGlobal [0, ""\dega_vehicles_suv\data\armoredsuv_body_co.paa""]; (_this select 0) setObjectTextureGlobal [1, ""\dega_vehicles_suv\data\armoredsuv_interier_co.paa""]; (_this select 0) setObjectMaterialGlobal [0, ""\dega_vehicles_suv\data\suv_body.rvmat""]; (_this select 0) setObjectMaterialGlobal [1, ""\dega_vehicles_suv\data\suv_interier.rvmat""]; };";
+                onPhaseChanged = "if ((_this select 1) == 0) then { (_this select 0) lockTurret [[0],false]; (_this select 0) setObjectTextureGlobal [0, ""\dega_vehicles_suv\data\armoredsuv_bodygun_co.paa""]; (_this select 0) setObjectTextureGlobal [1, ""\dega_vehicles_suv\data\armoredsuv_interiergun_co.paa""]; } else { (_this select 0) lockTurret [[0],true]; (_this select 0) setObjectTextureGlobal [0, ""\dega_vehicles_suv\data\armoredsuv_body_co.paa""]; (_this select 0) setObjectTextureGlobal [1, ""\dega_vehicles_suv\data\armoredsuv_interier_co.paa""]; };";
 			};			
 			class ram_hide_source {source="user"; animPeriod=0; initPhase=0; displayName = "Hide Pushbar"; author = "Deltagamer";};			
 			class lightbar_hide_source {source="user"; animPeriod=0; initPhase=1; displayName = "Hide Beacon Lights (Unmarked)"; author = "Deltagamer";};	
-			class BeaconsStart {source="user"; animPeriod=0; initPhase=1; displayName = "Start Beacon Lights"; author = "Deltagamer";};			
-			class roofbar_hide_source {source="user"; animPeriod=0; initPhase=0; displayName = "Hide Roofbar"; author = "Deltagamer";};			
+			class BeaconsStart {source="user"; animPeriod=0; initPhase=1; displayName = "Start Beacon Lights"; author = "Deltagamer";};				
+			class roofbar_hide_source 
+			{
+				source="user"; 
+				animPeriod=0; 
+				initPhase=0; 
+				displayName = "Change Roofbar (Locks Passengers)"; 
+				author = "Deltagamer"; 
+				useSource = 1;	
+                onPhaseChanged = "if ((_this select 1) == 0) then { {(_this select 0) lockturret [[_x],true]} forEach [2,3,4,5,6,7];  } else { {(_this select 0) lockturret [[_x],false]} forEach [2,3,4,5,6,7]; };";				
+			};				
 			class antenna_hide_source {source="user"; animPeriod=0; initPhase=0; displayName = "Hide Front Antenna"; author = "Deltagamer";};
-			class rearseats_source {source="user"; animPeriod=1; initPhase=1; displayName = "Fold Rear Seats"; author = "Deltagamer"; lockCargo[] = {4,5}; lockCargoAnimationPhase = 1; useSource = 1;};			
+			class rearseats_source {source="user"; animPeriod=1; initPhase=1; displayName = "Fold Rear Seats (Locks Passengers)"; author = "Deltagamer"; lockCargo[] = {4,5}; lockCargoAnimationPhase = 1; useSource = 1;};			
 		};			
 		class UserActions 
 		{
@@ -408,7 +486,7 @@ class CfgVehicles
 				};
 			};	
         };			
-		class HitPoints: HitPoints
+/*		class HitPoints: HitPoints
 		{
 			class HitLFWheel: HitLFWheel {armor=0.19; passThrough=0;}; /// it is easier to destroy wheels than hull of the vehicle
 			class HitLF2Wheel: HitLF2Wheel {armor=0.19; passThrough=0;};
@@ -425,7 +503,25 @@ class CfgVehicles
 			class HitGlass6: HitGlass1 {armor=1; explosionShielding = 0.8; minimalHit = 0.1; name = "glass6"; passThrough = 0; radius = 0.11; visual = "glass6";};
 			class HitGlass7: HitGlass1 {armor=1; explosionShielding = 0.8; minimalHit = 0.1; name = "glass7"; passThrough = 0; radius = 0.11; visual = "glass7";};
 			class HitGlass8: HitGlass1 {armor=1; explosionShielding = 0.8; minimalHit = 0.1; name = "glass8"; passThrough = 0; radius = 0.11; visual = "glass8";};
-		};
+		};*/		
+		class HitPoints: HitPoints
+		{
+			class HitLFWheel: HitLFWheel {radius=0.2;visual="wheel_1_1_damage";armorComponent="wheel_1_1_hide";armor=-80;minimalHit=0;explosionShielding=4;passThrough=0;};
+			class HitLF2Wheel: HitLF2Wheel {radius=0.2;visual="wheel_1_2_damage";armorComponent="wheel_1_2_hide";armor=-80;minimalHit=0;explosionShielding=4;passThrough=0;};
+			class HitRFWheel: HitRFWheel {radius=0.2;visual="wheel_2_1_damage";armorComponent="wheel_2_1_hide";armor=-80;minimalHit=0;explosionShielding=4;passThrough=0;};
+			class HitRF2Wheel: HitRF2Wheel {radius=0.2;visual="wheel_2_2_damage";armorComponent="wheel_2_2_hide";armor=-80;minimalHit=0;explosionShielding=4;passThrough=0;};
+			class HitFuel: HitFuel {name="palivo";armor=2;radius=0.44999999;};
+			class HitEngine: HitEngine {name="engine";armor=4;radius=0.25;};
+			class HitBody: HitBody 	{name = "body"; visual="zbytek"; passThrough=1;}; /// all damage to the hull is aFRLied to total damage			
+			class HitGlass1: HitGlass1 {armor=0.3;};
+			class HitGlass2: HitGlass2 {armor=0.3;};
+			class HitGlass3: HitGlass3 {armor=0.3;};
+			class HitGlass4: HitGlass4 {armor=0.3;};
+			class HitGlass5: HitGlass5 {armor=0.3;};
+			class HitGlass6: HitGlass6 {armor=0.3;};
+			class HitGlass7: HitGlass6 {armor=0.3;name = "glass7";visual = "glass7";};
+			class HitGlass8: HitGlass6 {armor=0.3;name = "glass8";visual = "glass8";};
+		};		
 		class Library {libTextDesc = $STR_PMC_LIB_ARMOREDSUV;};
 		class textureSources
 		{
@@ -435,7 +531,7 @@ class CfgVehicles
 				author="Deltagamer";
 				textures[] = {"\dega_vehicles_suv\data\armoredsuv_bodygun_co.paa", "\dega_vehicles_suv\data\armoredsuv_interiergun_co.paa"};
 				factions[]= {};
-				materials[] ={"\dega_vehicles_suv\data\suv_armouredbody.rvmat", "dega_vehicles_suv\data\suv_interier.rvmat"};
+				//materials[] ={"\dega_vehicles_suv\data\suv_armouredbody.rvmat", "dega_vehicles_suv\data\suv_interier.rvmat"};
 			};	
 			class Armoured
 			{
@@ -443,7 +539,7 @@ class CfgVehicles
 				author="Deltagamer";
 				textures[] = {"\dega_vehicles_suv\data\armoredsuv_body_co.paa", "\dega_vehicles_suv\data\armoredsuv_interier_co.paa"};
 				factions[]= {};
-				materials[] ={"\dega_vehicles_suv\data\suv_body.rvmat", "dega_vehicles_suv\data\suv_interier.rvmat"};
+				//materials[] ={"\dega_vehicles_suv\data\suv_body.rvmat", "dega_vehicles_suv\data\suv_interier.rvmat"};
 			};	
 		};
 		textureList[]= {};		
@@ -456,30 +552,30 @@ class CfgVehicles
 		forceInGarage=1;
 		side = 2;
 		faction = "DEGA_Vehicles_PMC";
-		displayName = "Armoured Suburban SUV (Minigun)";
+		displayName = "Armoured Suburban (Minigun)";
 		hiddenSelectionsTextures[] = {"\dega_vehicles_suv\data\armoredsuv_bodygun_co.paa", "\dega_vehicles_suv\data\armoredsuv_interiergun_co.paa"};	
-		hiddenSelectionsMaterials[] = {"\dega_vehicles_suv\data\suv_armouredbody.rvmat", "\dega_vehicles_suv\data\suv_interier.rvmat"};	
+		//hiddenSelectionsMaterials[] = {"\dega_vehicles_suv\data\suv_armouredbody.rvmat", "\dega_vehicles_suv\data\suv_interier.rvmat"};	
         editorPreview = "\dega_vehicles_suv\data\ui\DEGA_GunArmoredSUV_PMC.jpg";			
 		class Damage
 		{
 			tex[] = {};
 			mat[] =
 			{
-				"dega_vehicles_suv\data\SUV_armouredbody.rvmat",
-				"dega_vehicles_suv\data\SUV_armouredbody_damage.rvmat",
-				"dega_vehicles_suv\data\SUV_armouredbody_destruct.rvmat",
+				"dega_vehicles_suv\data\suv_body.rvmat",
+				"dega_vehicles_suv\data\suv_body_damage.rvmat",
+				"dega_vehicles_suv\data\suv_body_destruct.rvmat",
 				
 				"dega_vehicles_suv\data\SUV_chrom.rvmat",
 				"dega_vehicles_suv\data\SUV_chrom_damage.rvmat",
 				"dega_vehicles_suv\data\SUV_chrom_destruct.rvmat",
 				
-				//"A3\data_f\glass_veh.rvmat",			/// another material
-				//"A3\data_f\Glass_veh_damage.rvmat",		/// changes into different ones
-				//"A3\data_f\Glass_veh_damage.rvmat",
+				"A3\data_f\glass_veh.rvmat",			/// another material
+				"A3\data_f\Glass_veh_damage.rvmat",		/// changes into different ones
+				"A3\data_f\Glass_veh_damage.rvmat",
 				
-				"dega_vehicles_suv\data\SUV_glass.rvmat",
-				"dega_vehicles_suv\data\SUV_glass_damage.rvmat",
-				"dega_vehicles_suv\data\SUV_glass_destruct.rvmat",				
+				//"dega_vehicles_suv\data\SUV_glass.rvmat",
+				//"dega_vehicles_suv\data\SUV_glass_damage.rvmat",
+				//"dega_vehicles_suv\data\SUV_glass_destruct.rvmat",				
 				
 				"a3\data_f\default.rvmat",
 				"a3\data_f\default.rvmat",
@@ -496,30 +592,30 @@ class CfgVehicles
 		forceInGarage=1;
 		side = 2;
 		faction = "DEGA_Vehicles_PMC";
-		displayName = "Armoured Suburban SUV";
+		displayName = "Armoured Suburban";
 		hiddenSelectionsTextures[] = {"\dega_vehicles_suv\data\armoredsuv_body_co.paa", "\dega_vehicles_suv\data\armoredsuv_interier_co.paa"};	
-		hiddenSelectionsMaterials[] = {"\dega_vehicles_suv\data\suv_body.rvmat", "\dega_vehicles_suv\data\suv_interier.rvmat"};	
+		//hiddenSelectionsMaterials[] = {"\dega_vehicles_suv\data\suv_body.rvmat", "\dega_vehicles_suv\data\suv_interier.rvmat"};	
         editorPreview = "\dega_vehicles_suv\data\ui\DEGA_ArmoredSUV_PMC.jpg";		
 		class Damage
 		{
 			tex[] = {};
 			mat[] =
 			{
-				"dega_vehicles_suv\data\SUV_body.rvmat",
-				"dega_vehicles_suv\data\SUV_body_damage.rvmat",
-				"dega_vehicles_suv\data\SUV_body_destruct.rvmat",
+				"dega_vehicles_suv\data\suv_body.rvmat",
+				"dega_vehicles_suv\data\suv_body_damage.rvmat",
+				"dega_vehicles_suv\data\suv_body_destruct.rvmat",
 				
 				"dega_vehicles_suv\data\SUV_chrom.rvmat",
 				"dega_vehicles_suv\data\SUV_chrom_damage.rvmat",
 				"dega_vehicles_suv\data\SUV_chrom_destruct.rvmat",
 				
-				//"A3\data_f\glass_veh.rvmat",			/// another material
-				//"A3\data_f\Glass_veh_damage.rvmat",		/// changes into different ones
-				//"A3\data_f\Glass_veh_damage.rvmat",
+				"A3\data_f\glass_veh.rvmat",			/// another material
+				"A3\data_f\Glass_veh_damage.rvmat",		/// changes into different ones
+				"A3\data_f\Glass_veh_damage.rvmat",
 			
-				"dega_vehicles_suv\data\SUV_glass.rvmat",
-				"dega_vehicles_suv\data\SUV_glass_damage.rvmat",
-				"dega_vehicles_suv\data\SUV_glass_destruct.rvmat",				
+				//"dega_vehicles_suv\data\SUV_glass.rvmat",
+				//"dega_vehicles_suv\data\SUV_glass_damage.rvmat",
+				//"dega_vehicles_suv\data\SUV_glass_destruct.rvmat",				
 				
 				"a3\data_f\default.rvmat",
 				"a3\data_f\default.rvmat",
@@ -540,5 +636,113 @@ class CfgWeapons
     class DEGA_LMG_Minigun_Suv: LMG_Minigun_Transport
 	{
 		displayName = "Gatling 7.62 mm";
+			modes[] = {"HighROF", "LowROF", "close", "short", "medium", "far"};		
+			class LowROF: Mode_FullAuto
+			{
+				displayName = "2x M134 Minigun 7.62 mm";
+				sounds[] = {"StandardSound"};
+				class StandardSound
+				{
+					begin1[] = {"A3\Sounds_F\arsenal\weapons_vehicles\gatling_762mm\762mm_01_burst", 3.98107, 1, 1300, {2, 36879}};
+					soundBegin[] = {"begin1", 1};
+				};
+				soundContinuous = 1;
+				flash = "gunfire";
+				flashSize = 0.1;
+				recoil = "Empty";
+				ffMagnitude = 0.5;
+				ffFrequency = 11;
+				ffCount = 6;
+				reloadTime = 0.0333333;
+				dispersion = 0.0092;
+				aiRateOfFire = 1;
+				aiRateOfFireDistance = 10;
+				minRange = 0;
+				minRangeProbab = 0.01;
+				midRange = 1;
+				midRangeProbab = 0.01;
+				maxRange = 2;
+				maxRangeProbab = 0.01;
+				showToPlayer = 0;
+				multiplier = 1;
+			};
+			class HighROF: LowROF
+			{
+				displayName = "2x M134 Minigun 7.62 mm";
+				sounds[] = {"StandardSound"};
+				class StandardSound
+				{
+					begin1[] = {"A3\Sounds_F\arsenal\weapons_vehicles\gatling_762mm\762mm_01_burst", 2.51189, 1, 1500, {2, 36879}};
+					soundBegin[] = {"begin1", 1};
+				};
+				showToPlayer = 1;
+				multiplier = 3;
+			};
+			class close: HighROF
+			{
+				soundBurst = 0;
+				aiBurstTerminable = 1;
+				showToPlayer = 0;
+				burst = 12;
+				burstRangeMax = 42;
+				aiRateOfFire = 0.5;
+				aiRateOfFireDispersion = 1;
+				aiRateOfFireDistance = 50;
+				minRange = 0;
+				minRangeProbab = 0.7;
+				midRange = 100;
+				midRangeProbab = 0.75;
+				maxRange = 300;
+				maxRangeProbab = 0.2;
+			};
+			class short: close
+			{
+				aiBurstTerminable = 1;
+				showToPlayer = 0;
+				burst = 8;
+				burstRangeMax = 36;
+				aiRateOfFire = 1;
+				aiRateOfFireDispersion = 2;
+				aiRateOfFireDistance = 150;
+				minRange = 100;
+				minRangeProbab = 0.75;
+				midRange = 300;
+				midRangeProbab = 0.75;
+				maxRange = 600;
+				maxRangeProbab = 0.2;
+			};
+			class medium: close
+			{
+				aiBurstTerminable = 1;
+				showToPlayer = 0;
+				burst = 8;
+				burstRangeMax = 30;
+				aiRateOfFire = 2;
+				aiRateOfFireDispersion = 2;
+				aiRateOfFireDistance = 300;
+				minRange = 300;
+				minRangeProbab = 0.75;
+				midRange = 600;
+				midRangeProbab = 0.65;
+				maxRange = 800;
+				maxRangeProbab = 0.1;
+			};
+			class far: close
+			{
+				aiBurstTerminable = 1;
+				showToPlayer = 0;
+				burst = 8;
+				burstRangeMax = 12;
+				aiRateOfFire = 4;
+				aiRateOfFireDispersion = 4;
+				aiRateOfFireDistance = 800;
+				minRange = 800;
+				minRangeProbab = 0.65;
+				midRange = 1000;
+				midRangeProbab = 0.3;
+				maxRange = 1500;
+				maxRangeProbab = 0.05;
+			};
+			weight = 40;	
 	};
 };
